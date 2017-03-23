@@ -4,6 +4,7 @@ var async = require('async');
 module.exports = function(app){
     //游记默认路由
     app.get('/travels',function(req,res,next){
+        //bug
         req.user.myTravels(function(err,travels){
             if(err){
                 return next(err);

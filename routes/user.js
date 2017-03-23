@@ -12,6 +12,7 @@ module.exports = function(app){
   })
   //用户查看收藏的新闻路由
   app.get('/user/coNews',loadUser,function(req,res,next){
+     //有可能有问题
      req.user.coNews(function(err,coNews){
        if(err){
          return next(err);
