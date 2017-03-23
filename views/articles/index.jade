@@ -1,0 +1,5 @@
+h1 推荐文章
+ul
+  - articles.forEach(function(article){
+      a(href="/articles" + encodeURIComponent(article.ID))=article.title
+  - })

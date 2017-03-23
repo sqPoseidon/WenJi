@@ -1,0 +1,9 @@
+h1 删除游记
+ul
+  - Travels.forEach(function(travel){
+    li
+      travel.title
+      form(action="/travels/" + encodeURIComponent(travel.title),method="POST")
+        input(name="_method",type="hidden",value="DELETE")
+        input(type="submit",value="DELETE")
+  - })

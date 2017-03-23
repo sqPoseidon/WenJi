@@ -1,0 +1,16 @@
+h1 文物检索
+form(method="POST",action="/antiques/search")
+  p
+    input#keyword(name="keyword")
+  p
+    input(type="submit",value="搜索")
+h2 新闻列表
+ul
+  - news.forEach(function(onenews){
+      a(href="/news" + encodeURIComponent(onenews.ID))= onenews.title
+  - })
+
+p
+  a(href="/articles") 文章&nbsp
+  a(href="/travels") 游记&nbsp
+  a(href="/user") 我的

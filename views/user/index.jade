@@ -1,0 +1,9 @@
+h1= user.username
+h2= user.phone
+- if(user.email){
+    h4= user.email
+- }
+a(href='/user/coNews')= 我收藏的新闻
+a(href='/user/coArctiles')= 我收藏的文章
+a(href='/user/edit')= 修改密码&nbsp;
+a(href='/user/edit')= 编辑资料

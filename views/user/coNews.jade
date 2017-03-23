@@ -1,0 +1,9 @@
+h1= user.username&nbsp
+h1 我收藏的新闻
+ul
+  - coNews.forEach(function(news){
+    li
+      a(href="/news" + encodeURIComponent(news.ID))= news.title
+  - });
+
+  a(href='/user')= 返回

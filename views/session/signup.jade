@@ -1,0 +1,19 @@
+h1 Sign Up
+form(method="POST",action="/session/signup")
+  p
+    label(for="username") Username<br />
+    input#username(name="username")
+  p
+    label(for="password") Password<br />
+    input#password(name="password")
+  p
+    label(for="gender") Gender<br />
+    input#gender(name="gender")
+  p
+    label(for="phone") Phone<br />
+    input#phone(name="phone")
+  p
+    label(for="email") Email<br />
+    input#email(name="email")
+  p
+    input(type="submit",value="Create")

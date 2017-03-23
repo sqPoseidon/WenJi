@@ -1,0 +1,7 @@
+h1 文物列表
+a(href="/antiques/new")= 添加文物
+a(href="/antiques/del")= 删除文物
+ul
+  - antiques.forEach(function(antique){
+      a(href="/antiques" + encodeURIComponent(antique.ID))= antique.name
+  - });

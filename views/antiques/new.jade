@@ -1,0 +1,25 @@
+h1  新建文物
+form(method="POST",action="/antiques")
+  p
+    label(for="name") 名称<br />
+    input#name(name="name")
+  p
+    label(for="country") 所属国家<br />
+    input#country(name="country")
+  p
+    label(for="era") 时代<br />
+    input#era(name="era")
+  p
+    label(for="category") 文物分类<br />
+    input#category(name="category")
+  p
+    label(for="value") 文物价值<br />
+    input#value(name="value")
+  p
+    label(for="location") 所在地<br />
+    input#location(name="location")
+  p
+    label(for="detail") 文物详情<br />
+    textarea#detail(name="detail")
+  p
+    input(type="submit",value="创建")

@@ -1,0 +1,7 @@
+h1 New Comment
+form(method="POST",action="/comments")
+  p
+    label(for="body") 评论内容<br />
+    textarea#body(name="body")
+  p
+    input(type="submit",value="提交")

@@ -1,0 +1,10 @@
+h1 新的游记
+form(method="POST",action="/travels")
+  p
+    label(for="title") 标题 <br />
+    input#title(name="title")
+  p
+    label(for="body") 正文 <br />
+    textarea#body(name=body)
+  p
+    input(type="submit",value="提交")
