@@ -1,6 +1,8 @@
 var async = require('async');
 var News = require('../data/models/news');
 var Comments = require('../data/models/comments');
+var loadUser = require('./middleware/load_user');
+
 module.exports = function(app){
     //新闻主界面
     app.get('/news',function(req,res,next){
@@ -25,11 +27,11 @@ module.exports = function(app){
     });
     //新闻详情
     app.get('/news:ID',function(req,res,next){
-        var id = req.new.ID;
+        var id = req.onenews.ID;
         var comments = 
                 Comments.find({newsID:id})
                 .sort({'time':-1});
-        res.render('news/newsDetail',{ new:req.new,
+        res.render('news/newsDetail',{ new:req.onenews,
             comments:comments});
     });
     //创建新闻

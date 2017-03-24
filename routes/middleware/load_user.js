@@ -9,6 +9,7 @@ function loadUser(req,res,next){
         if(!user){
             return res.send('Not found',404);
         }
+        //如果找到了匹配的用户，将其赋值给req.user以备路由监听器在稍后使用
         req.user = user;
         next();
     });
