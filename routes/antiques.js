@@ -1,8 +1,10 @@
 var async = require('async');
 var Antiques = require('../data/models/articles');
+var loggedIn = require('./middleware/logged_in');
+var loadAntiques = require('./middleware/load_antiques');
 module.exports = function(app){
     //默认文物路由
-    app.get('/antiques',function(req,res,next){
+    app.get('/antiques',loggedIn,function(req,res,next){
         async.parallel([
             function(next){
                 Antiques.count(next);
@@ -25,7 +27,7 @@ module.exports = function(app){
         );
     });
     //文物查询路由
-    app.get('/antiques/search',function(req,res,next){
+    app.get('/antiques/search',loggedIn,function(req,res,next){
         var keyword = req.keyword;
         async.parallel([
             function(next){
@@ -47,7 +49,7 @@ module.exports = function(app){
         );
     });
     //文物详情路由
-    app.get('/antiques:ID',function(req,res,next){
+    app.get('/antiques:ID',loadAntiques,loggedIn,function(req,res,next){
         res.render('antiques/detail',{antique:req.antique});
     });
     //新建文物路由

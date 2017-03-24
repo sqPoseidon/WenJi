@@ -1,9 +1,10 @@
 var async = require('async');
 var Articles = require('../data/models/articles');
-
+var loggedIn = require('./middleware/logged_in');
+var loadArticles = require('./middleware/load_articles');
 module.exports = function(app){
     //默认文章
-    app.get('/articles',function(req,res,next){
+    app.get('/articles',loggedIn,function(req,res,next){
         async.parallel([
             function(next){
                 Articles.count(next);
@@ -24,7 +25,7 @@ module.exports = function(app){
         );
     });
     //查看文章详情
-    app.get('/articles:ID',function(req,res,next){
+    app.get('/articles:ID',loadArticles,loggedIn,function(req,res,next){
         res.render('articles/articleDetail',{article:req.article});
     });
     //新建文章

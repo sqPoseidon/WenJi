@@ -2,10 +2,11 @@ var async = require('async');
 var News = require('../data/models/news');
 var Comments = require('../data/models/comments');
 var loadUser = require('./middleware/load_user');
-
+var loadNews = require('./middleware/load_news');
+var loggedIn = require('./middleware/logged_in');
 module.exports = function(app){
     //新闻主界面
-    app.get('/news',function(req,res,next){
+    app.get('/news',loggedIn,function(req,res,next){
         async.parallel([
             function(next){
                 News.count(next);
@@ -20,13 +21,14 @@ module.exports = function(app){
             if(err) return next(err);
             var news = results[1];
             res.render('news/index',{
-                news:news
+                news:news,
+                user:req.session.user
             });
         }
         );
     });
     //新闻详情
-    app.get('/news:ID',function(req,res,next){
+    app.get('/news:ID',loggedIn,loadNews,function(req,res,next){
         var id = req.onenews.ID;
         var comments = 
                 Comments.find({newsID:id})

@@ -1,10 +1,11 @@
 var Travels = require('../data/models/travels');
 var async = require('async');
 var loadUser = require('./middleware/load_user');
-
+var loggedIn = require('./middleware/logged_in');
+var loadTravels = require('./middleware/load_articles');
 module.exports = function(app){
     //游记默认路由
-    app.get('/travels',loadUser,function(req,res,next){
+    app.get('/travels',loadUser,loggedIn,function(req,res,next){
         //bug
         req.user.myTravels(function(err,travels){
             if(err){
@@ -37,18 +38,18 @@ module.exports = function(app){
         ); */
     });
     //按名称访问游记详情
-    app.get('/travels:title',loadUser,function(req,res,next){
+    app.get('/travels:title',loadUser,loggedIn,loadTravels,function(req,res,next){
         var travel = req.travel;
         res.render('travels/detail',{
             travel:travel
         });
     });
     //新建游记路由
-    app.get('/travels/new',loadUser,function(req,res,next){
+    app.get('/travels/new',loadUser,loggedIn,function(req,res,next){
         res.render('travels/new');
     });
     //提交新建游记路由
-    app.post('/travels',loadUser,function(req,res,next){
+    app.post('/travels',loadUser,loggedIn,function(req,res,next){
         var travel = req.body;
         travel.phone = req.session.user.phone;
         Travels.create(travel,function(err){
@@ -64,7 +65,7 @@ module.exports = function(app){
         });
     });
     //删除游记
-    app.get('/travels/del',loadUser,function(req,res,next){
+    app.get('/travels/del',loadUser,loggedIn,function(req,res,next){
         req.user.myTravels(function(err,travels){
             if(err){
                 return next(err);
@@ -76,7 +77,7 @@ module.exports = function(app){
         });
     });
     //删除游记路由
-    app.del('/travels:title',loadUser,function(req,res,next){
+    app.del('/travels:title',loadUser,loggedIn,function(req,res,next){
         req.travels.remove(function(err){
             if(err){
                 return next(err);
