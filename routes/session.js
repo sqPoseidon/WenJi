@@ -27,7 +27,7 @@ module.exports = function(app){
             });
     });
     //用户注册
-    app.get('/session/signup',notLoggedIn,function(req,res){
+    app.get('/session/signup',notLoggedIn,function(req,res,next){
         res.render('session/signup',{title:'Sign Up'});
     });
     //用户提交注册信息

@@ -62,8 +62,10 @@ module.exports = function(app){
     var password = user.password;
     var email = user.email;
     //var a="xxx",b="yyy";var json="{a:'"+a+"',b:'"+b+"'}";json=eval("("+json+")")
-    var json="{username:\""+username+"\",email:\""+email+"\",password:\""+password+"\"}";
-    Users.update({phone:req.user.phone},json,function(err){
+    //var json="{username:\""+username+"\",email:\""+email+"\",password:\""+password+"\"}";
+    var json = {"username":username,"email":email,"password":password};
+    var newjson = JSON.stringify(json);
+    Users.update({phone:req.user.phone},newjson,function(err){
         console.log('User Information Updated Error!');
     });
     var newUser = Users.findOne({phone:req.user.phone});

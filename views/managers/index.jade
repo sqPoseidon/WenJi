@@ -1,0 +1,10 @@
+h1 管理员登录
+form(method="POST",action="/managers/login")
+  p
+    label(for="managerID") ManagerID<br />
+    input#managerID(name="managerID")
+  p
+    label(for="password") Password<br />
+    input#password(name="password")
+  p
+    input(type="submit",value="Log In")

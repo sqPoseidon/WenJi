@@ -4,6 +4,7 @@ var Comments = require('../data/models/comments');
 var loadUser = require('./middleware/load_user');
 var loadNews = require('./middleware/load_news');
 var loggedIn = require('./middleware/logged_in');
+var isManager = require('./middleware/is_manager');
 module.exports = function(app){
     //新闻主界面
     app.get('/news',loggedIn,function(req,res,next){
@@ -37,11 +38,11 @@ module.exports = function(app){
             comments:comments});
     });
     //创建新闻
-    app.get('/news/create',function(req,res,next){
-        res.render('news/new');
+    app.get('/news/create',isManager,function(req,res,next){
+        res.render('news/create');
     });
     //提交新建的新闻
-    app.post('/news',function(req,res,next){
+    app.post('/news',isManager,function(req,res,next){
         News.create(req.body,function(err){
             if(err){
                 if(err.code===11000){
@@ -55,7 +56,27 @@ module.exports = function(app){
         });
     });
     //删除新闻路由
-    app.del('/news:_id',function(req,res,next){
+    app.get('/news/del',isManager,function(req,res,next){
+        async.parallel([
+            function(next){
+                News.count(next);
+            },
+            function(next){
+                News.find({})
+                .sort({time:1})
+                .exec(next);
+            }
+        ],
+        function(err,results){
+            if(err) return next(err);
+            var news = results[1];
+            req.session.news = news;
+            res.render('news/del',{news:news});
+        }
+        );
+    })
+    //删除新闻路由
+    app.del('/news:_id',isManager,function(req,res,next){
         req.new.remove(function(err){
             if(err){
                 return next(err);
