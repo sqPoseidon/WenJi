@@ -1,8 +1,8 @@
 var User = require('../../data/models/users');
 
 function loadUser(req,res,next){
-    console.log(req.params.username);
-    User.findOne({phone:req.params.phone},function(err,user){
+    console.log(req.session.user.username);
+    User.findOne({phone:req.session.user.phone},function(err,user){
         if(err){
             return next(err);
         }

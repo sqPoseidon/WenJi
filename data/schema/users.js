@@ -73,19 +73,19 @@ UsersSchema
         this.updated_at = undefined;
         next();
     });
-UsersSchema.method.coNews = function(callback){
+UsersSchema.methods.coNews = function(callback){
     return this.model('coNews')
     .find({phone:this.phone})
     .sort({time:1})
     .exec(callback)
 };
-UsersSchema.method.coArticles = function(callback){
+UsersSchema.methods.coArticles = function(callback){
     return this.model('coArticles')
     .find({phone:this.phone})
     .sort({time:1})
     .exec(callback)
 };
-UsersSchema.method.myTravels = function(callback){
+UsersSchema.methods.myTravels = function(callback){
     return this.model('Travels')
     .find({phone:this.phone})
     .sort({created_at:1})

@@ -6,7 +6,7 @@ var loadTravels = require('./middleware/load_articles');
 module.exports = function(app){
     //游记默认路由
     app.get('/travels',loadUser,loggedIn,function(req,res,next){
-        //bug
+        cnosole.log(req.user.username);
         req.user.myTravels(function(err,travels){
             if(err){
                 return next(err);

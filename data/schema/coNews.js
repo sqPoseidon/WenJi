@@ -3,12 +3,12 @@ var ObjectId = mongoose.Schema.Types.ObjectId;
 
 var coNewsSchema = new mongoose.Schema({
     phone:{
-        type:ObjectId,
+        type:String,
         ref:'Users',
         required:true
     },
     new:{
-        type:ObjectId,
+        type:String,
         ref:'News',
         required:true
     },
