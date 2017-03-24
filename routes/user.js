@@ -1,5 +1,5 @@
 var async = require('async');
-var User = require('../data/models/users');
+var Users = require('../data/models/users');
 var Articles = require('../data/models/articles');
 var News = require('../data/models/news');
 var loadUser = require('./middleware/load_user');
@@ -41,31 +41,32 @@ module.exports = function(app){
   });
   //用户提交个人信息路由
   app.post('/user',loggedIn,loadUser,function(req,res,next){
-    console.log('修改个人资料路由');
     var user = req.body;
     //请求的用户名字段为空
     if(!user.username){
       user.username = req.user.username;
       console.log('填充用户名');
+      console.log(user.username);
     }
     if(!user.password){
       user.password = req.user.password;
       console.log('填充密码');
+      console.log(user.password);
     }
     if(!user.email){
       user.email = req.user.email;
       console.log('填充邮件');
+      console.log(user.email);
     }
-    var updated_at = Date.now();
-    User.update({phone:user.phone},{
-      'username':user.username,
-      'password':user.password,
-      'email':user.email,
-      'updated_at':updated_at
-    },function(err){
-      console.log('User Information Update Error!');
+    var username = user.username;
+    var password = user.password;
+    var email = user.email;
+    //var a="xxx",b="yyy";var json="{a:'"+a+"',b:'"+b+"'}";json=eval("("+json+")")
+    var json="{username:\""+username+"\",email:\""+email+"\",password:\""+password+"\"}";
+    Users.update({phone:req.user.phone},json,function(err){
+        console.log('User Information Updated Error!');
     });
-    var newUser = User.findOne({phone:user.phone});
+    var newUser = Users.findOne({phone:req.user.phone});
     req.session.user = newUser;
     res.redirect('/user');
   });
