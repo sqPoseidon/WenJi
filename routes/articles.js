@@ -25,7 +25,7 @@ module.exports = function(app){
         );
     });
     //查看文章详情
-    app.get('/articles:_id',loadArticles,loggedIn,function(req,res,next){
+    app.get('/articles:_id',loggedIn,loadArticles,function(req,res,next){
         res.render('articles/articleDetail',{article:req.article});
     });
     //新建文章

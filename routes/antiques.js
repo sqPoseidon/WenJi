@@ -49,7 +49,7 @@ module.exports = function(app){
         );
     });
     //文物详情路由
-    app.get('/antiques:ID',loadAntiques,loggedIn,function(req,res,next){
+    app.get('/antiques:ID',loggedIn,loadAntiques,function(req,res,next){
         res.render('antiques/detail',{antique:req.antique});
     });
     //新建文物路由
