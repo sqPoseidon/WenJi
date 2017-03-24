@@ -9,7 +9,7 @@ form(method="POST",action="/antiques/search")
 h2 新闻列表
 ul
   - news.forEach(function(onenews){
-      a(href="/news" + encodeURIComponent(onenews.ID))= onenews.title
+      a(href="/news" + encodeURIComponent(onenews._id))= onenews.title
   - })
 
 p

@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 var ObjectId = mongoose.Schema.Types.ObjectId;
 
 var coArticlesSchema = new mongoose.Schema({
-    phone:{
+    user:{
         type:ObjectId,
         ref:'Users',
         required:true
@@ -26,6 +26,6 @@ coArticlesSchema
     .virtual('title')
     .get(function(){
         return this.model('Articles')
-                   .find({ID:this.article}).author;
+                   .find({_id:this.article}).title;
     });
 module.exports = coArticlesSchema;

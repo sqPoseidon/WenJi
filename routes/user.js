@@ -13,11 +13,10 @@ module.exports = function(app){
   })
   //用户查看收藏的新闻路由
   app.get('/user/coNews',loadUser,loggedIn,function(req,res,next){
-     //有可能有问题
      req.user.coNews(function(err,coNews){
        if(err){
          return next(err);
-       } 
+       }
        res.render('user/coNews',{
          user:req.user,
          coNews:coNews
@@ -52,5 +51,8 @@ module.exports = function(app){
     },function(err){
       console.log('User Information Update Error!');
     });
+    var newUser = User.findOne({phone:user.phone});
+    req.session.user = newUser;
+    res.render('/users');
   });
 }

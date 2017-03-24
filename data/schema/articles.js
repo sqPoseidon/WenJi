@@ -9,11 +9,7 @@ title：标题
 body：正文
 rate：推荐指数
 */    
-    ID:{
-        type:String,
-        unique:true,
-        required:true
-    },
+
     author:{
         type:String,
         required:true

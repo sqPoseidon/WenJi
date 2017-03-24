@@ -2,18 +2,14 @@ var mongoose =  require('mongoose');
 
 var NewsSchema = new mongoose.Schema({
 /*
-ID:编号（主键）
+ID:编号
 title ：标题
 meta：时间
 author：作者
 body：正文
 picture：是否有图片
 */
-    ID:{
-        type:String,
-        unique:true,
-        required:true
-    },
+
     title:{
         type:String,
         required:true

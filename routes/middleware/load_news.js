@@ -1,9 +1,9 @@
 var News = require('../../data/models/news');
 
 function loadNews(req,res,next){
-    console.log(req.params.ID);
-    console.log(req.params.title);
-    News.findOne({ID:req.params.ID},function(err,onenews){
+    console.log('加载新闻中间件');
+    console.log(req.params._id);
+    News.findOne({_id:req.params._id},function(err,onenews){
         if(err){
             return next(err);
         }

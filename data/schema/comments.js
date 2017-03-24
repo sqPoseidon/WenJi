@@ -3,19 +3,18 @@ var ObjectId = mongoose.Schema.Types.ObjectId;
 
 var CommentsSchema = new mongoose.Schema({
 /*
-commentID：评论ID
 username：用户名
 newsID：新闻编号
 sNum：点赞数
 body：正文
 time：时间
 */    
-    username:{
+    user:{
         type:ObjectId,
         ref:'Users',
         required:true
     },
-    newsID:{
+    news:{
         type:ObjectId,
         ref:'News',
         required:true    

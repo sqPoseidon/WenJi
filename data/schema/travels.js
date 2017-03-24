@@ -8,7 +8,7 @@ meta：时间
 title：标题
 body：正文
  */
-    phone:{
+    user:{
         type:ObjectId,
         ref:'Users',
         required:true

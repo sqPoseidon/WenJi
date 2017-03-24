@@ -2,9 +2,10 @@ var News = require('../data/models/news');
 var loggedIn = require('./middleware/logged_in');
 var Comments = require('../data/models/comments');
 var loadComments = require('./middleware/load_comments');
+var loadNews = require('./middleware/load_news');
 module.exports = function(app){
     //点赞
-    app.get('/comments:commentID',loggedIn,loadComments,function(req,res,next){
+    app.get('/comments:_id',loggedIn,loadComments,function(req,res,next){
         var comment = req.comment;
         comment.sNum = comment.sNum + 1;
         var id = req.comment._id;
@@ -19,10 +20,10 @@ module.exports = function(app){
         res.render('news/newComment');
     });
     //提交评论
-    app.post('/comments',loggedIn,loadComments,function(req,res,next){
+    app.post('/comments',loggedIn,function(req,res,next){
         var comment = req.body;
-        comment.newsID = req.session.new._id;
-        comment.username = req.session.user._id;
+        comment.news = req.onenews._id;
+        comment.user = req.session.user._id;
         Comments.create(comment,function(err){
             if(err){
                 next(err);

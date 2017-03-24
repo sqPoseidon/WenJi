@@ -13,13 +13,14 @@ module.exports = function(app){
             },
             function(next){
                 News.find({})
-                .sort({ID:1})
+                .sort({time:1})
                 .exec(next);
             }
         ],
         function(err,results){
             if(err) return next(err);
             var news = results[1];
+            req.session.news = news;
             res.render('news/index',{
                 news:news,
                 user:req.session.user
@@ -28,11 +29,10 @@ module.exports = function(app){
         );
     });
     //新闻详情
-    app.get('/news:ID',loggedIn,loadNews,function(req,res,next){
-        var id = req.onenews.ID;
+    app.get('/news:_id',loggedIn,loadNews,function(req,res,next){
         var comments = 
-                Comments.find({newsID:id})
-                .sort({'time':-1});
+                Comments.find({news:req.onenews._id})
+                .sort({time:-1});
         res.render('news/newsDetail',{ new:req.onenews,
             comments:comments});
     });
@@ -55,7 +55,7 @@ module.exports = function(app){
         });
     });
     //删除新闻路由
-    app.del('/news:ID',function(req,res,next){
+    app.del('/news:_id',function(req,res,next){
         req.new.remove(function(err){
             if(err){
                 return next(err);

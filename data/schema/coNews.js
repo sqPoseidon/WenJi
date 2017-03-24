@@ -2,13 +2,13 @@ var mongoose = require('mongoose');
 var ObjectId = mongoose.Schema.Types.ObjectId;
 
 var coNewsSchema = new mongoose.Schema({
-    phone:{
-        type:String,
+    user:{
+        type:ObjectId,
         ref:'Users',
         required:true
     },
-    new:{
-        type:String,
+    news:{
+        type:ObjectId,
         ref:'News',
         required:true
     },

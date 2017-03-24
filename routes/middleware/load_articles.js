@@ -2,9 +2,9 @@ var Articles = require('../../data/models/articles');
 
 function loadArticles(req,res,next){
     console.log("加载文章中间件");
-    console.log(req.params.ID);
+    console.log(req.params._id);
     console.log(req.params.title);
-    Articles.findOne({ID:req.params.ID},function(err,article){
+    Articles.findOne({_id:req.params._id},function(err,article){
         if(err){
             return next(err);
         }

@@ -38,7 +38,7 @@ module.exports = function(app){
         ); */
     });
     //按名称访问游记详情
-    app.get('/travels:title',loadUser,loggedIn,loadTravels,function(req,res,next){
+    app.get('/travels:_id',loadUser,loggedIn,loadTravels,function(req,res,next){
         var travel = req.travel;
         res.render('travels/detail',{
             travel:travel
@@ -51,7 +51,7 @@ module.exports = function(app){
     //提交新建游记路由
     app.post('/travels',loadUser,loggedIn,function(req,res,next){
         var travel = req.body;
-        travel.phone = req.session.user.phone;
+        travel.user = req.session.user._id;
         Travels.create(travel,function(err){
             if(err){
                 if(err.code===11000) {
@@ -77,7 +77,7 @@ module.exports = function(app){
         });
     });
     //删除游记路由
-    app.del('/travels:title',loadUser,loggedIn,function(req,res,next){
+    app.del('/travels:_id',loadUser,loggedIn,function(req,res,next){
         req.travels.remove(function(err){
             if(err){
                 return next(err);

@@ -75,19 +75,19 @@ UsersSchema
     });
 UsersSchema.methods.coNews = function(callback){
     return this.model('coNews')
-    .find({phone:this.phone})
+    .find({user:this._id})
     .sort({time:1})
     .exec(callback)
 };
 UsersSchema.methods.coArticles = function(callback){
     return this.model('coArticles')
-    .find({phone:this.phone})
+    .find({user:this._id})
     .sort({time:1})
     .exec(callback)
 };
 UsersSchema.methods.myTravels = function(callback){
     return this.model('Travels')
-    .find({phone:this.phone})
+    .find({user:this._id})
     .sort({created_at:1})
     .exec(callback);
 };

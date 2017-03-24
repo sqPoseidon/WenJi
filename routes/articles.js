@@ -25,7 +25,7 @@ module.exports = function(app){
         );
     });
     //查看文章详情
-    app.get('/articles:ID',loadArticles,loggedIn,function(req,res,next){
+    app.get('/articles:_id',loadArticles,loggedIn,function(req,res,next){
         res.render('articles/articleDetail',{article:req.article});
     });
     //新建文章
@@ -47,7 +47,7 @@ module.exports = function(app){
         });
     });
     //删除文章路由
-    app.del('/articles:ID',function(req,res,next){
+    app.del('/articles:_id',function(req,res,next){
         req.article.remove(function(err){
             if(err){
                 return next(err);
