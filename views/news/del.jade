@@ -1,8 +1,0 @@
-p
-  a(href="/managers/main") 主页
-h1 删除新闻
-ul
-  - news.forEach(function(onenews){
-    li
-      a(href="/news" + encodeURIComponent(onenews.ID))= onenews.title
-  - })

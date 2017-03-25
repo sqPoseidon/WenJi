@@ -40,22 +40,22 @@ module.exports = function(app){
         function(err,results){
             if(err) return next(err);
             var articles = results[1];
-            res.render('articles/manager/article',{
+            res.render('articles/manager/list',{
                 articles:articles
             });
         }
         );
     });
     //用户文章详情路由
-    app.get('/articles:_id',loggedIn,loadArticles,function(req,res,next){
-        res.render('articles/articleDetail',{article:req.article});
+    app.get('/articles/user/:_id',loggedIn,loadArticles,function(req,res,next){
+        res.render('articles/user/detail',{article:req.article});
     });
     //新建文章路由
-    app.get('/articles/new',isManager,function(req,res,next){
-        res.render('articles/new');
+    app.get('/articles/manager/new',isManager,function(req,res,next){
+        res.render('articles/manager/new');
     });
     //提交新建文章
-    app.post('/articles',isManager,function(req,res,next){
+    app.post('/articles/manager',isManager,function(req,res,next){
         Articles.create(req.body,function(err){
             if(err){
                 if(err.code===11000){
@@ -69,12 +69,12 @@ module.exports = function(app){
         });
     });
     //管理员文章详情路由
-    app.get('/articles/managers:_id',isManager,loadArticles,function(req,res,next){
+    app.get('/articles/manager/:_id',isManager,loadArticles,function(req,res,next){
         console.log(req.article);
-        res.render('articles/articleDetail',{article:req.article});
+        res.render('articles/manager/detail',{article:req.article});
     });
     //删除文章路由
-    app.del('/articles:_id',isManager,loadArticles,function(req,res,next){
+    app.del('/articles/manager/:_id',isManager,loadArticles,function(req,res,next){
         req.article.remove(function(err){
             if(err){
                 return next(err);

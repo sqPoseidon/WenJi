@@ -1,0 +1,12 @@
+h5
+  在这里管理员将会看到文章的详情，
+  可以通过点击delete将文章删除
+h1= article.title
+form(action="/articles/manager/" + encodeURIComponent(article._id), method="POST")
+  input(name="_method", type="hidden", value="DELETE")
+  input(type="submit", value="Delete")
+h3= article.title
+h3= article.author
+h3= article.time
+h3= article.rate
+h3= article.body

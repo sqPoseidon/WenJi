@@ -11,10 +11,10 @@ h2 新闻列表
 ul
   - news.forEach(function(onenews){
     li
-      a(href="/news" + encodeURIComponent(onenews._id))= onenews.title
+      a(href="/news/user/" + encodeURIComponent(onenews._id))= onenews.title
   - })
 
 p
-  a(href="/articles") 文章&nbsp
+  a(href="/articles/user") 文章&nbsp
   a(href="/travels") 游记&nbsp
   a(href="/user") 我的

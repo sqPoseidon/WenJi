@@ -6,7 +6,7 @@ var loadNews = require('./middleware/load_news');
 var loggedIn = require('./middleware/logged_in');
 var isManager = require('./middleware/is_manager');
 module.exports = function(app){
-    //新闻主界面
+    //用户新闻主界面
     app.get('/news',loggedIn,function(req,res,next){
         async.parallel([
             function(next){
@@ -22,14 +22,14 @@ module.exports = function(app){
             if(err) return next(err);
             var news = results[1];
             req.session.news = news;
-            res.render('news/index',{
+            res.render('news/user/index',{
                 news:news,
                 user:req.session.user
             });
         }
         );
     });
-
+    //管理员新闻主界面
     app.get('/news/manager',isManager,function(req,res,next){
         async.parallel([
             function(next){
@@ -45,28 +45,39 @@ module.exports = function(app){
             if(err) return next(err);
             var news = results[1];
             req.session.news = news;
-            res.render('news/manager',{
+            res.render('news/manager/list',{
                 news:news
             });
         }
         );
     })
-    //新闻详情
-    app.get('/news:_id',loggedIn,loadNews,function(req,res,next){
+    //用户新闻详情
+    app.get('/news/user/:_id',loggedIn,loadNews,function(req,res,next){
         req.onenews.findComments(function(err,comments){
             if(err) return next(err);
             req.session.news = req.onenews;
             req.session.comments = comments;
-            res.render('news/newsDetail',{onenews:req.onenews,
+            res.render('news/user/detail',{onenews:req.onenews,
+            comments:comments});
+        });
+    });
+    //管理员新闻详情界面
+    app.get('/news/manager/:_id',isManager,loadNews,function(req,res,next){
+        req.onenews.findComments(function(err,comments){
+            if(err) return next(err);
+            req.session.news = req.onenews;
+            req.session.comments = comments;
+            res.render('news/manager/detail',{onenews:req.onenews,
             comments:comments});
         });
     });
     //创建新闻
-    app.get('/news/create',isManager,function(req,res,next){
-        res.render('news/create');
+    app.get('/news/manager/create',isManager,function(req,res,next){
+        console.log('进入创建新闻路由');
+        res.render('news/manager/create');
     });
     //提交新建的新闻
-    app.post('/news',isManager,function(req,res,next){
+    app.post('/news/manager',isManager,function(req,res,next){
         News.create(req.body,function(err){
             if(err){
                 if(err.code===11000){
@@ -79,8 +90,21 @@ module.exports = function(app){
             res.redirect('/news/manager');
         });
     });
+
     //删除新闻路由
-    app.get('/news/del',isManager,function(req,res,next){
+    app.del('/news/manager/:_id',isManager,loadNews,function(req,res,next){
+        req.new.remove(function(err){
+            if(err){
+                return next(err);
+            }
+            res.redirect('/news/manager');
+        });
+    });
+}
+
+/*
+    //删除新闻路由
+    app.get('/news/manager/delete',isManager,function(req,res,next){
         async.parallel([
             function(next){
                 News.count(next);
@@ -96,17 +120,8 @@ module.exports = function(app){
             var news = results[1];
             req.session.news = news;
             console.log(news);
-            res.render('news/del',{news:news});
+            res.render('news/manager/delete',{news:news});
         }
         );
     })
-    //删除新闻路由
-    app.del('/news/:_id',isManager,loadNews,function(req,res,next){
-        req.new.remove(function(err){
-            if(err){
-                return next(err);
-            }
-            res.redirect('/news');
-        });
-    });
-}
+*/

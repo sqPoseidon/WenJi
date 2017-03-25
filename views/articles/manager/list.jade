@@ -1,0 +1,14 @@
+这是管理员使用的文章管理页面
+h1 文章管理
+p
+  a(href="/managers/main") 主页
+ul
+  - articles.forEach(function(article){
+    li
+      a(href="/articles/manager/" + encodeURIComponent(article._id))= article.title
+  - });
+h5
+  这是管理员使用的文章管理界面,
+  在这个页面中,
+  管理员点击文章的名称可以跳转到detail,
+  在那个页面中将可以看到文章的详情

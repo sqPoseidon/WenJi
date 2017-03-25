@@ -1,0 +1,14 @@
+这是管理员使用的新闻管理页面
+h1 新闻管理
+p
+  a(href="/managers/main") 主页
+ul
+  - news.forEach(function(onenews){
+    li
+      a(href="/news/manager/" + encodeURIComponent(onenews._id))= onenews.title
+  - });
+h5
+  这是管理员使用的新闻管理界面,
+  在这个页面中,
+  管理员点击新闻的名称可以跳转到detail,
+  在那个页面中将可以看到新闻的详情

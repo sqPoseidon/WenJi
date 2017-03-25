@@ -1,8 +1,0 @@
-h1 推荐文章
-p
-  a(href="/managers/main") 主页
-ul
-  - articles.forEach(function(article){
-    li
-      a(href="/articles" + encodeURIComponent(article._id))=article.title
-  - })
