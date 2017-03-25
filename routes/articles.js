@@ -4,8 +4,8 @@ var loggedIn = require('./middleware/logged_in');
 var loadArticles = require('./middleware/load_articles');
 var isManager = require('./middleware/is_manager');
 module.exports = function(app){
-    //默认文章
-    app.get('/articles',loggedIn,function(req,res,next){
+    //默认文章路由（用户使用）
+    app.get('/articles/user',loggedIn,function(req,res,next){
         async.parallel([
             function(next){
                 Articles.count(next);
@@ -19,12 +19,13 @@ module.exports = function(app){
         function(err,results){
             if(err) return next(err);
             var articles = results[1];
-            res.render('articles/index',{
+            res.render('articles/user/list',{
                 articles:articles
             });
         }
         );
     });
+    //管理员文章路由
     app.get('/articles/manager',isManager,function(req,res,next){
         async.parallel([
             function(next){
@@ -39,17 +40,17 @@ module.exports = function(app){
         function(err,results){
             if(err) return next(err);
             var articles = results[1];
-            res.render('articles/articleManager',{
+            res.render('articles/manager/article',{
                 articles:articles
             });
         }
         );
     });
-    //查看文章详情
+    //用户文章详情路由
     app.get('/articles:_id',loggedIn,loadArticles,function(req,res,next){
         res.render('articles/articleDetail',{article:req.article});
     });
-    //新建文章
+    //新建文章路由
     app.get('/articles/new',isManager,function(req,res,next){
         res.render('articles/new');
     });
@@ -67,26 +68,10 @@ module.exports = function(app){
             res.redirect('/articles/manager');
         });
     });
-    //删除文章
-    app.get('/articles/del',isManager,function(req,res,next){
-        async.parallel([
-            function(next){
-                Articles.count(next);
-            },
-            function(next){
-                Articles.find({})
-                .sort({time:-1,rate:-1})
-                .exec(next);
-            }
-        ],
-        function(err,results){
-            if(err) return next(err);
-            var articles = results[1];
-            res.render('articles/delarticles',{
-                articles:articles
-            });
-        }
-        );
+    //管理员文章详情路由
+    app.get('/articles/managers:_id',isManager,loadArticles,function(req,res,next){
+        console.log(req.article);
+        res.render('articles/articleDetail',{article:req.article});
     });
     //删除文章路由
     app.del('/articles:_id',isManager,loadArticles,function(req,res,next){

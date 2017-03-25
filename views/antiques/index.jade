@@ -1,8 +1,0 @@
-h1 文物管理
-p
-  a(href="/managers/main") 主页
-ul
-  - antiques.forEach(function(antique){
-    li
-      a(href="/antiques/managers" + encodeURIComponent(antique.ID))= antique.name
-  - });

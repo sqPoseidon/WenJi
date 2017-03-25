@@ -1,0 +1,10 @@
+h5
+  这是用户搜索文物的结果界面，
+  用户点击文物的名称，
+  将会跳转到detail界面查看文物的详情
+h1 文物搜索结果
+ul
+  - antiques.forEach(function(antique){
+    li
+      a(href="/antiques/user" + encodeURIComponent(antique.ID))= antique.name
+  - });
