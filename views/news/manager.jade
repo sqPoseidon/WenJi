@@ -1,0 +1,7 @@
+h1 新闻列表
+a(href="/managers/main") 主页
+ul
+  - news.forEach(function(onenews){
+    li
+      a(href="/news" + encodeURIComponent(onenews._id))= onenews.title
+  - })

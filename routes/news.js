@@ -29,13 +29,37 @@ module.exports = function(app){
         }
         );
     });
+
+    app.get('/news/manager',isManager,function(req,res,next){
+        async.parallel([
+            function(next){
+                News.count(next);
+            },
+            function(next){
+                News.find({})
+                .sort({time:1})
+                .exec(next);
+            }
+        ],
+        function(err,results){
+            if(err) return next(err);
+            var news = results[1];
+            req.session.news = news;
+            res.render('news/manager',{
+                news:news
+            });
+        }
+        );
+    })
     //新闻详情
     app.get('/news:_id',loggedIn,loadNews,function(req,res,next){
-        var comments = 
-                Comments.find({news:req.onenews._id})
-                .sort({time:-1});
-        res.render('news/newsDetail',{ new:req.onenews,
+        req.onenews.findComments(function(err,comments){
+            if(err) return next(err);
+            req.session.news = req.onenews;
+            req.session.comments = comments;
+            res.render('news/newsDetail',{onenews:req.onenews,
             comments:comments});
+        });
     });
     //创建新闻
     app.get('/news/create',isManager,function(req,res,next){
@@ -52,7 +76,7 @@ module.exports = function(app){
                 }
                 return ;
             }
-            res.redirect('/news');
+            res.redirect('/news/manager');
         });
     });
     //删除新闻路由
@@ -71,12 +95,13 @@ module.exports = function(app){
             if(err) return next(err);
             var news = results[1];
             req.session.news = news;
+            console.log(news);
             res.render('news/del',{news:news});
         }
         );
     })
     //删除新闻路由
-    app.del('/news:_id',isManager,function(req,res,next){
+    app.del('/news/:_id',isManager,loadNews,function(req,res,next){
         req.new.remove(function(err){
             if(err){
                 return next(err);

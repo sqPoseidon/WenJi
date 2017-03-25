@@ -4,8 +4,5 @@ h1 删除文物
 ul
   - antiques.forEach(function(antique){
     li
-      antique.name
-      form(action="/antiques/" + encodeURIComponent(antique.ID),method="POST")
-        input(name="_method",type="hidden",value="DELETE")
-        input(type="submit",value="DELETE")
+      a(href="/antiques/" + encodeURIComponent(antique.ID))= antique.name
   - })

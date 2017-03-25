@@ -10,6 +10,7 @@ function loadComments(req,res,next){
         if(!comment){
             return res.send('Not Found',404);
         }
+        console.log(comment);
         req.comment = comment;
         next();
     });

@@ -1,6 +1,6 @@
 function isManager(req,res,next){
     if(!req.session.manager){
-        res.direct('/managers');
+        res.redirect('/managers');
     } else {
         next();
     }

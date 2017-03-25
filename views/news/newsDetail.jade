@@ -1,11 +1,13 @@
-h1= new.title
-h3= new.time&nbsp
-h3= new.author
-div!=new.body
+h1= onenews.title
+h3= onenews.time
+h3= onenews.author
+div!=onenews.body
 a(href='/comments/newComment') 我来评论
 ul
   - comments.forEach(function(comment){
     li
-      h4= comment.body&nbsp&nbsp
-      a(href='/comments/' + encodeURIComponent(comment._id)) 点赞
+      div!= comment.body
+      h6= comment.sNum
+      p
+        a(href='/comments' + encodeURIComponent(comment._id)) 点赞
   - });

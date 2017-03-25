@@ -1,0 +1,10 @@
+h1= antique.name
+form(action="/antiques/" + encodeURIComponent(antique.ID), method="POST")
+  input(name="_method", type="hidden", value="DELETE")
+  input(type="submit", value="Delete")
+h3= antique.country
+h3= antique.era
+h3= antique.category
+h3= antique.value
+h3= antique.location
+div!=antique.detail

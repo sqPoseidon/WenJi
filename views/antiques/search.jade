@@ -1,5 +1,6 @@
 h1 文物搜索结果
 ul
   - antiques.forEach(function(antique){
-      a(href="/antiques" + encodeURIComponent(antique.ID))=antique.name
-  - })
+    li
+      a(href="/antiques" + encodeURIComponent(antique.ID))= antique.name
+  - });

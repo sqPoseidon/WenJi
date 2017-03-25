@@ -3,12 +3,14 @@ h1 你好&nbsp
 h1 文物检索
 form(method="POST",action="/antiques/search")
   p
+    label(for="keyword") 关键字&nbsp
     input#keyword(name="keyword")
   p
     input(type="submit",value="搜索")
 h2 新闻列表
 ul
   - news.forEach(function(onenews){
+    li
       a(href="/news" + encodeURIComponent(onenews._id))= onenews.title
   - })
 

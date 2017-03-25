@@ -26,4 +26,10 @@ detail：其他细节
     location:String,
     detail:String
 });
+
+AntiquesSchema.statics.findByName = function(query,callback){
+    return this.findOne(query)
+               .sort({ID:1})
+               .exec(callback);
+};
 module.exports = AntiquesSchema;

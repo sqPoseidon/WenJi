@@ -1,10 +1,8 @@
 h1 文物管理
 p
   a(href="/managers/main") 主页
-p
-  a(href="/antiques/new") 添加文物&nbsp
-  a(href="/antiques/del") 删除文物
 ul
   - antiques.forEach(function(antique){
-      a(href="/antiques" + encodeURIComponent(antique.ID))= antique.name
+    li
+      a(href="/antiques/managers" + encodeURIComponent(antique.ID))= antique.name
   - });

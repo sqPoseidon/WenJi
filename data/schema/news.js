@@ -38,5 +38,10 @@ NewsSchema
         }
         next();
     });
-    
+NewsSchema.methods.findComments = function(callback){
+    return this.model('Comments')
+               .find({news:this._id})
+               .sort({time:1})
+               .exec(callback);
+}
 module.exports = NewsSchema;

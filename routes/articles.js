@@ -25,6 +25,26 @@ module.exports = function(app){
         }
         );
     });
+    app.get('/articles/manager',isManager,function(req,res,next){
+        async.parallel([
+            function(next){
+                Articles.count(next);
+            },
+            function(next){
+                Articles.find({})
+                .sort({time:-1,rate:-1})
+                .exec(next);
+            }
+        ],
+        function(err,results){
+            if(err) return next(err);
+            var articles = results[1];
+            res.render('articles/articleManager',{
+                articles:articles
+            });
+        }
+        );
+    });
     //查看文章详情
     app.get('/articles:_id',loggedIn,loadArticles,function(req,res,next){
         res.render('articles/articleDetail',{article:req.article});
@@ -44,7 +64,7 @@ module.exports = function(app){
                 }
                 return;
             }
-            res.redirect('/articles');
+            res.redirect('/articles/manager');
         });
     });
     //删除文章
@@ -69,12 +89,12 @@ module.exports = function(app){
         );
     });
     //删除文章路由
-    app.del('/articles:_id',isManager,function(req,res,next){
+    app.del('/articles:_id',isManager,loadArticles,function(req,res,next){
         req.article.remove(function(err){
             if(err){
                 return next(err);
             }
-            res.redirect('/articles');
+            res.redirect('/articles/manager');
         });
     });
 }

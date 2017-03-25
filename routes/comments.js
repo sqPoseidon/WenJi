@@ -6,14 +6,12 @@ var loadNews = require('./middleware/load_news');
 module.exports = function(app){
     //点赞
     app.get('/comments:_id',loggedIn,loadComments,function(req,res,next){
-        var comment = req.comment;
-        comment.sNum = comment.sNum + 1;
         var id = req.comment._id;
         var num = req.comment.sNum + 1;
         Comments.update({_id:id},{sNum:num},function(err){
             console.log('Comments Update Error!');
         });
-        res.redirect('news/new',{new:req.new,comments:comments});
+        res.redirect('/news');
     });
     //新建评论
     app.get('/comments/newComment',loggedIn,function(req,res){
@@ -22,7 +20,7 @@ module.exports = function(app){
     //提交评论
     app.post('/comments',loggedIn,function(req,res,next){
         var comment = req.body;
-        comment.news = req.onenews._id;
+        comment.news = req.session.news._id;
         comment.user = req.session.user._id;
         Comments.create(comment,function(err){
             if(err){
