@@ -1,10 +1,11 @@
 var async = require('async');
-var Antiques = require('../data/models/articles');
+var Antiques = require('../data/models/antiques');
 var loggedIn = require('./middleware/logged_in');
 var loadAntiques = require('./middleware/load_antiques');
+var isManager = require('./middleware/is_manager');
 module.exports = function(app){
     //默认文物路由
-    app.get('/antiques',loggedIn,function(req,res,next){
+    app.get('/antiques',isManager,function(req,res,next){
         async.parallel([
             function(next){
                 Antiques.count(next);
@@ -53,11 +54,11 @@ module.exports = function(app){
         res.render('antiques/detail',{antique:req.antique});
     });
     //新建文物路由
-    app.get('/antiques/new',function(req,res,next){
+    app.get('/antiques/new',isManager,function(req,res,next){
         res.render('antiques/new');
     });
     //提交文物路由
-    app.post('/antiques',function(req,res,next){
+    app.post('/antiques',isManager,function(req,res,next){
         Antiques.create(req.body,function(err){
             if(err){
                 if(err.code===11000){
@@ -71,11 +72,11 @@ module.exports = function(app){
         });
     });
     //删除文物
-    app.get('/antiques/del',function(req,res,next){
-        res.render('antiques/delete',{antiques:req.antiques});
+    app.get('/antiques/del',isManager,function(req,res,next){
+        res.render('antiques/del',{antiques:req.antiques});
     });
     //删除文物路由
-    app.del('/antiques:ID',function(req,res,next){
+    app.del('/antiques:ID',isManager,function(req,res,next){
         req.antique.remove(function(err){
             if(err){
                 return next(err);

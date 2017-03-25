@@ -1,8 +1,13 @@
 var mongoose = require('mongoose');
 
 var ManagersSchema = new mongoose.Schema({
-    managerID:"admin",
-    password:"admin"
+    managerID:{
+        type:String,
+        'default':"admin"
+    },
+    password:{
+        type:String,
+        'default':"admin"
+    }
 });
-
 module.exports = ManagersSchema;

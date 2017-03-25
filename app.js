@@ -43,6 +43,7 @@ require('./routes/session')(app);
 require('./routes/travels')(app);
 require('./routes/user')(app);
 require('./routes/antiques')(app);
+require('./routes/managers')(app);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
