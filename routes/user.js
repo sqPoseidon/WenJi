@@ -1,5 +1,5 @@
 var async = require('async');
-var User = require('../data/models/users');
+var Users = require('../data/models/users');
 var Articles = require('../data/models/articles');
 var News = require('../data/models/news');
 var loadUser = require('./middleware/load_user');
@@ -45,58 +45,25 @@ module.exports = function(app){
       //请求的用户名字段为空
       if(!user.username){
         user.username = req.user.username;
-        console.log('填充用户名');
-        console.log(user.username);
       }
       if(!user.password){
         user.password = req.user.password;
-        console.log('填充密码');
-        console.log(user.password);
       }
       if(!user.email){
         user.email = req.user.email;
-        console.log('填充邮件');
-        console.log(user.email);
       }
-      var username = user.username;
-      var password = user.password;
-      var email = user.email;
-      //var a="xxx",b="yyy";var json="{a:'"+a+"',b:'"+b+"'}";json=eval("("+json+")")
-      //var json="{username:\""+username+"\",email:\""+email+"\",password:\""+password+"\"}";
-      var json = {"username":username,"email":email,"password":password};
-      var newjson = JSON.stringify(json);
-      Users.update({phone:req.user.phone},newjson,function(err){
+      Users.update({phone:req.user.phone},{
+          $set:{username:user.username,password:user.password,email:user.email}},
+          function(err){
           console.log('User Information Updated Error!');
       });
-      var newUser = Users.findOne({phone:req.user.phone});
-      req.session.user = newUser;
-      res.redirect('/user');
+      console.log('用户信息更新完成');
+      Users.findOne({phone:req.user.phone},function(err,newUser){
+        if(err){
+          next(err);
+        }
+        req.session.user = newUser;
+        res.redirect('/user');
+      });
   });
 }
-/**
- * var user = req.body;
-    console.log(req.user);
-    if(user.username) req.user.username = user.username;
-    if(user.password) req.user.password = user.password;
-    if(user.email) req.user.email = user.email;
-    var newUser = req.user;
-    console.log(newUser);
-    req.user.remove(function(err){
-      if(err) {
-        console.log('删除失败');
-        return next(err);
-      }
-    })
-    User.create(newUser,function(err){
-      if(err){
-        console.log('创建失败');
-        return ;
-      }
-      console.log('修改成功');
-      //req.user = newUser;
-      req.session.user = newUser;
-      console.log(req.session.user);
-      //console.log(req.user);
-      res.redirect('/user');
-    });
- */
