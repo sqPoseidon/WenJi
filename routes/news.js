@@ -14,7 +14,7 @@ module.exports = function(app){
             },
             function(next){
                 News.find({})
-                .sort({time:1})
+                .sort({_id:-1})
                 .exec(next);
             }
         ],
@@ -37,7 +37,7 @@ module.exports = function(app){
             },
             function(next){
                 News.find({})
-                .sort({time:1})
+                .sort({_id:-1})
                 .exec(next);
             }
         ],
@@ -52,7 +52,7 @@ module.exports = function(app){
         );
     })
     //用户新闻详情
-    app.get('/news/user/:_id',loggedIn,loadNews,function(req,res,next){
+    app.get('/news/user:_id',loggedIn,loadNews,function(req,res,next){
         req.onenews.findComments(function(err,comments){
             if(err) return next(err);
             req.session.news = req.onenews;
@@ -61,20 +61,10 @@ module.exports = function(app){
             comments:comments});
         });
     });
-    //管理员新闻详情界面
-    app.get('/news/manager/:_id',isManager,loadNews,function(req,res,next){
-        req.onenews.findComments(function(err,comments){
-            if(err) return next(err);
-            req.session.news = req.onenews;
-            req.session.comments = comments;
-            res.render('news/manager/detail',{onenews:req.onenews,
-            comments:comments});
-        });
-    });
     //创建新闻
-    app.get('/news/manager/create',isManager,function(req,res,next){
+    app.get('/news/manager/new',isManager,function(req,res,next){
         console.log('进入创建新闻路由');
-        res.render('news/manager/create');
+        res.render('news/manager/new');
     });
     //提交新建的新闻
     app.post('/news/manager',isManager,function(req,res,next){
@@ -90,10 +80,23 @@ module.exports = function(app){
             res.redirect('/news/manager');
         });
     });
+    //管理员新闻详情界面
+    app.get('/news/manager:_id',isManager,loadNews,function(req,res,next){
+        req.onenews.findComments(function(err,comments){
+            if(err) return next(err);
+            req.session.news = req.onenews;
+            req.session.comments = comments;
+            res.render('news/manager/detail',{onenews:req.onenews,
+            comments:comments});
+        });
+    });
+    
+    
+    
 
     //删除新闻路由
-    app.del('/news/manager/:_id',isManager,loadNews,function(req,res,next){
-        req.new.remove(function(err){
+    app.del('/news/manager:_id',isManager,loadNews,function(req,res,next){
+        req.onenews.remove(function(err){
             if(err){
                 return next(err);
             }

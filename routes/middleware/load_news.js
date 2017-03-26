@@ -5,6 +5,7 @@ function loadNews(req,res,next){
     console.log(req.params._id);
     News.findOne({_id:req.params._id},function(err,onenews){
         if(err){
+            console.log('加载新闻中间价bug')
             return next(err);
         }
         if(!onenews){

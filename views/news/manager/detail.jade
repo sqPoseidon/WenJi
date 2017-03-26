@@ -1,6 +1,6 @@
 h5
-  在这个页面中管理员将会看到文物的详细情况，
-  可以通过点击delete按键将文物删除
+  在这个页面中管理员将会看到新闻的详细情况，
+  可以通过点击delete按键将新闻删除
 h1= onenews.title
 form(action="/news/manager" + encodeURIComponent(onenews._id), method="POST")
   input(name="_method", type="hidden", value="DELETE")
@@ -11,7 +11,7 @@ div!=onenews.body
 ul
   - comments.forEach(function(comment){
     li
-      comment.body&nbsp
-      comment.time&nbsp
-      comment.sNum
+      div!= comment.body
+      h6= comment.sNum
+      h6= comment.time
   - })

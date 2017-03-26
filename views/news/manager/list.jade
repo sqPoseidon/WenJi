@@ -5,7 +5,7 @@ p
 ul
   - news.forEach(function(onenews){
     li
-      a(href="/news/manager/" + encodeURIComponent(onenews._id))= onenews.title
+      a(href="/news/manager" + encodeURIComponent(onenews._id))= onenews.title
   - });
 h5
   这是管理员使用的新闻管理界面,

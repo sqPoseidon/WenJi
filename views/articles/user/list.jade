@@ -5,5 +5,5 @@ p
   a(href="/news") 主页
 ul
   - articles.forEach(function(article){
-      a(href="/articles" + encodeURIComponent(article._id))=article.title
+      a(href="/articles/user" + encodeURIComponent(article._id))=article.title
   - })

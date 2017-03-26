@@ -47,7 +47,7 @@ module.exports = function(app){
         );
     });
     //用户文章详情路由
-    app.get('/articles/user/:_id',loggedIn,loadArticles,function(req,res,next){
+    app.get('/articles/user:_id',loggedIn,loadArticles,function(req,res,next){
         res.render('articles/user/detail',{article:req.article});
     });
     //新建文章路由
@@ -69,12 +69,12 @@ module.exports = function(app){
         });
     });
     //管理员文章详情路由
-    app.get('/articles/manager/:_id',isManager,loadArticles,function(req,res,next){
+    app.get('/articles/manager:_id',isManager,loadArticles,function(req,res,next){
         console.log(req.article);
         res.render('articles/manager/detail',{article:req.article});
     });
     //删除文章路由
-    app.del('/articles/manager/:_id',isManager,loadArticles,function(req,res,next){
+    app.del('/articles/manager:_id',isManager,loadArticles,function(req,res,next){
         req.article.remove(function(err){
             if(err){
                 return next(err);
