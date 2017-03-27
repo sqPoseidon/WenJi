@@ -2,7 +2,7 @@ h1 我收藏的文章
 ul
   - coArticles.forEach(function(article){
     li
-      a(href="/articles" + encodeURIComponent(article.article))= article.title
+      a(href="/articles/user" + encodeURIComponent(article.article))= article.title
   - });
 
   a(href='/user') 返回

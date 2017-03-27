@@ -1,5 +1,11 @@
 这是用户使用的文章详情页面
 h1= article.title
+form(action="/articles/user/collect" + encodeURIComponent(article._id), method="POST")
+  input(name="_method", type="hidden", value="收藏")
+  input(type="submit", value="收藏")
+form(action="/articles/user/cancel" + encodeURIComponent(article._id), method="POST")
+  input(name="_method", type="hidden", value="取消收藏")
+  input(type="submit", value="取消收藏")
 h4= article.author
 h4= article.time
 h4= article.rate

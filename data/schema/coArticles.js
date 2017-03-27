@@ -12,6 +12,7 @@ var coArticlesSchema = new mongoose.Schema({
         ref:'Articles',
         required:true
     },
+    title:String,
     time:{
         type:Date,
         'default':Date.now
@@ -21,11 +22,5 @@ coArticlesSchema
     .pre('save',function(next){
         this.time = undefined;
         next();
-    });
-coArticlesSchema
-    .virtual('title')
-    .get(function(){
-        return this.model('Articles')
-                   .find({_id:this.article}).title;
     });
 module.exports = coArticlesSchema;

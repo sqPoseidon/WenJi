@@ -1,0 +1,12 @@
+h1 编辑游记
+h3= travel.title
+h3= travel.text
+form(method="POST",action="/travels/edit")
+  p
+    label(for="title") 标题<br/>
+    input#title(name="title")
+  p
+    label(for="text") 正文<br/>
+    input#text(name="text")
+  p
+    input(type="submit",value="提交")

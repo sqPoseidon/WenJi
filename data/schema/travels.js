@@ -26,10 +26,9 @@ body：正文
     },
     title:{
         type:String,
-        unique:true,
         required:true
     },
-    body:String
+    text:String
 });
 TravelsSchema
     .pre('save',function(next){

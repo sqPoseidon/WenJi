@@ -1,10 +1,10 @@
-h1 新的游记
-form(method="POST",action="/travels")
+h1 新建游记
+form(method="POST",action="/travels/new")
   p
     label(for="title") 标题 <br />
     input#title(name="title")
   p
-    label(for="body") 正文 <br />
-    textarea#body(name=body)
+    label(for="text") 正文 <br />
+    textarea#text(name="text")
   p
     input(type="submit",value="提交")

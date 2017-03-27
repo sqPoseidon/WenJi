@@ -7,7 +7,5 @@ h3 游记列表
 ul
   - Travels.forEach(function(travel){
     li
-      a(href="/travels" + encodeURIComponent(travel._id))=travel.title
+      a(href="/travels/detail" + encodeURIComponent(travel._id))=travel.title
   - })
-p
-  a(href="/travels/del") 删除游记

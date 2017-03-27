@@ -15,7 +15,7 @@ module.exports = function(app){
     });
     //新建评论
     app.get('/comments/newComment',loggedIn,function(req,res){
-        res.render('news/newComment');
+        res.render('news/user/newComment');
     });
     //提交评论
     app.post('/comments',loggedIn,function(req,res,next){

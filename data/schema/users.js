@@ -35,6 +35,10 @@ updated_at: 更新时间
         type:String,
         match:emailRegexp
     },
+    portarit:{
+        type:String,
+        'default':"C:\Users\QiSun\Desktop\国创\wenji\public\images\portarit.jpg"
+    },
     created_at:{
         type:Date,
         'default':Date.now,

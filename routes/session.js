@@ -3,6 +3,7 @@
 var User = require('../data/models/users');
 var notLoggedIn = require('./middleware/not_logged_in');
 var loadUser = require('./middleware/load_user');
+var loggedIn = require('./middleware/logged_in');
 module.exports = function(app){
     app.use(function(req,res,next){
         res.locals = req.session;
@@ -51,5 +52,9 @@ module.exports = function(app){
             res.redirect('/session/signin');
         })
     });
-
+    //用户退出登录
+    app.get('/session/logoff',loggedIn,function(req,res,next){
+        req.session.user = null;
+        res.redirect('/');
+    })
 }

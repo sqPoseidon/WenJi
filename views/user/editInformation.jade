@@ -1,13 +1,10 @@
 h1 编辑资料
-form(method="POST",action="/user")
+form(method="POST",action="/user/information")
   p
     label(for="username") 用户名<br />
     input#username(name="username")
   p
     label(for="email") 邮箱<br />
     input#email(name="email")
-  p
-    label(for="password") 密码<br />
-    input#password(type="password",name="password")
   p
     input(type="submit",value="提交")

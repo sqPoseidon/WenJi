@@ -1,3 +1,13 @@
+h5
+  在这个页面可以看到用户的游记的详情
+a(href="/travels") 游记主页
 h1= travel.title
+h3 创建时间
 h3= travel.created_at
-div!=travel.body
+h3 最近修改时间
+h3= travel.updated_at
+form(action="/travels/del" + encodeURIComponent(travel._id),method="POST")
+  input(name="_method",type="hidden",value="DELETE")
+  input(type="submit",value="DELETE")
+a(href="/travels/edit" + encodeURIComponent(travel._id)) 编辑
+div!= travel.text
