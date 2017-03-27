@@ -2,6 +2,9 @@ var User = require('../../data/models/users');
 
 function loadUser(req,res,next){
     //console.log(req.session.user);
+    if(!req.session.user){
+        res.redirect('/');
+    }
     User.findOne({phone:req.session.user.phone},function(err,user){
         if(err){
             return next(err);
