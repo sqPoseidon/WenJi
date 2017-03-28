@@ -2,6 +2,7 @@ var User = require('../../data/models/users');
 
 function managerloadUser(req,res,next){
     console.log('管理员加载用户中间件');
+    console.log(req.params.phone);
     User.findOne({phone:req.params.phone},function(err,user){
         if(err){
             return next(err);

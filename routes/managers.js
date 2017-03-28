@@ -64,7 +64,7 @@ module.exports = function(app){
                 return next(err);
             }
         });
-        coArticles.remove({user:req.user._id},function(req,res,next){
+        coArticles.remove({user:req.user._id},function(err){
             if(err) {
                 console.log('删除用户信息时，删除收藏文章失败');
                 return next(err);
