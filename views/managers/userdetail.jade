@@ -1,0 +1,12 @@
+h1 用户详情
+h2= user.phone
+form(action="/managers/delUser" + encodeURIComponent(user.phone), method="POST")
+  input(name="_method", type="hidden", value="DELETE")
+  input(type="submit", value="Delete")
+h3= user.username
+h3= user.password
+h3= user.gender
+h3= user.email
+h3= user.portarit
+h4= user.created_at
+h4= user.updated_at

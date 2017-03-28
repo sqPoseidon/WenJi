@@ -1,0 +1,7 @@
+h1 用户列表
+ul
+  - users.forEach(function(user){
+    li
+      a(href="/managers/userdetail" + encodeURIComponent(user.phone))= user.phone
+  - })
+  a(href="/managers/main") 返回主页
