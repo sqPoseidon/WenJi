@@ -59,7 +59,7 @@ module.exports = function(app){
                 console.log('新增收藏文章失败');
             }
         });
-        res.redirect('/articles/user');
+        res.redirect('/articles/user' + req.article._id);
     });
     //用户取消收藏文章
     app.post('/articles/user/cancel:_id',loggedIn,loadArticles,loadUser,function(req,res,next){
@@ -70,7 +70,7 @@ module.exports = function(app){
                 console.log('取消收藏成功');
             }
         });
-        res.redirect('/articles/user');
+        res.redirect('/articles/user' + req.article._id);
     })
     //新建文章路由
     app.get('/articles/manager/new',isManager,function(req,res,next){

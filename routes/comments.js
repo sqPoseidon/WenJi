@@ -11,7 +11,7 @@ module.exports = function(app){
         Comments.update({_id:id},{sNum:num},function(err){
             console.log('Comments Update Error!');
         });
-        res.redirect('/news');
+        res.redirect('/news/user' + req.session.news._id);
     });
     //新建评论
     app.get('/comments/newComment',loggedIn,function(req,res){
@@ -27,7 +27,7 @@ module.exports = function(app){
                 next(err);
                 return;
             }
-            res.redirect('/news');
+            res.redirect('/news/user' + req.session.news._id);
         });
     });
 }

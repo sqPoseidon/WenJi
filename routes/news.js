@@ -5,6 +5,7 @@ var loadUser = require('./middleware/load_user');
 var loadNews = require('./middleware/load_news');
 var loggedIn = require('./middleware/logged_in');
 var isManager = require('./middleware/is_manager');
+var coNews = require('../data/models/coNews');
 module.exports = function(app){
     //用户新闻主界面
     app.get('/news',loggedIn,function(req,res,next){
@@ -61,6 +62,26 @@ module.exports = function(app){
             comments:comments});
         });
     });
+    //用户收藏新闻
+    app.post('/news/user/collect:_id',loggedIn,loadNews,loadUser,function(req,res,next){
+        coNews.create({user:req.user._id,news:req.onenews._id,title:req.onenews.title},function(err){
+            if(err){
+                console.log('收藏新闻失败');
+            }
+        });
+        res.redirect('/news/user' + req.onenews._id);
+    })
+    //用户取消收藏新闻
+    app.post('/news/user/cancel:_id',loggedIn,loadNews,loadUser,function(req,res,next){
+        coNews.remove({user:req.user._id,news:req.onenews._id},function(err){
+            if(err) {
+                console.log('取消收藏失败');
+            } else {
+                console.log('取消收藏成功');
+            }
+        });
+        res.redirect('/news/user' + req.onenews._id);
+    })
     //创建新闻
     app.get('/news/manager/new',isManager,function(req,res,next){
         console.log('进入创建新闻路由');
@@ -91,40 +112,27 @@ module.exports = function(app){
         });
     });
     
-    
-    
 
     //删除新闻路由
     app.del('/news/manager:_id',isManager,loadNews,function(req,res,next){
+        var onenews = req.onenews;
         req.onenews.remove(function(err){
             if(err){
                 return next(err);
             }
-            res.redirect('/news/manager');
         });
+        Comments.remove({news:onenews._id},function(req,res,next){
+            if(err) {
+                console.log('新闻删除失败');
+                return next(err);
+            }
+        })
+        coNews.remove({news:onenews._id},function(req,res,next){
+            if(err){
+                console.log('新闻删除失败');
+                return next(err);
+            }
+        });
+        res.redirect('/news/manager');
     });
 }
-
-/*
-    //删除新闻路由
-    app.get('/news/manager/delete',isManager,function(req,res,next){
-        async.parallel([
-            function(next){
-                News.count(next);
-            },
-            function(next){
-                News.find({})
-                .sort({time:1})
-                .exec(next);
-            }
-        ],
-        function(err,results){
-            if(err) return next(err);
-            var news = results[1];
-            req.session.news = news;
-            console.log(news);
-            res.render('news/manager/delete',{news:news});
-        }
-        );
-    })
-*/

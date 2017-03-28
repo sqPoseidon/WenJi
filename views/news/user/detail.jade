@@ -1,6 +1,13 @@
+a(href="/news") 返回
 h1= onenews.title
 h3= onenews.time
 h3= onenews.author
+form(action="/news/user/collect" + encodeURIComponent(onenews._id), method="POST")
+  input(name="_method", type="hidden", value="收藏")
+  input(type="submit", value="收藏")
+form(action="/news/user/cancel" + encodeURIComponent(onenews._id), method="POST")
+  input(name="_method", type="hidden", value="取消收藏")
+  input(type="submit", value="取消收藏")
 div!=onenews.body
 a(href='/comments/newComment') 我来评论
 ul
