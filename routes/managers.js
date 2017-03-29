@@ -36,7 +36,7 @@ module.exports = function(app){
                 console.log('管理员查看所有用户失败');
                 return next(err);
             } else {
-                res.render('managers/allusers',{users:users});
+                res.render('managers/allUsers',{users:users});
             }
         });
     });

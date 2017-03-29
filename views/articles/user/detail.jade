@@ -1,4 +1,5 @@
-这是用户使用的文章详情页面
+h1 这是用户使用的文章详情页面
+a(href="/articles/user") 返回
 h1= article.title
 form(action="/articles/user/collect" + encodeURIComponent(article._id), method="POST")
   input(name="_method", type="hidden", value="收藏")

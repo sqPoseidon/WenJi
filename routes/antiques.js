@@ -21,7 +21,7 @@ module.exports = function(app){
                 return next(err);
             }
             var antiques = results[1];
-            console.log(antiques);
+            //console.log(antiques);
             res.render('antiques/manager/list',{
                 antiques:antiques
             });
@@ -67,7 +67,7 @@ module.exports = function(app){
     });
     //管理员文物详情路由
     app.get('/antiques/manager:ID',isManager,loadAntiques,function(req,res,next){
-        console.log(req.antique);
+        //console.log(req.antique);
         res.render('antiques/manager/detail',{antique:req.antique});
     })
     

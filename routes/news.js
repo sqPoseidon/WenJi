@@ -111,7 +111,6 @@ module.exports = function(app){
             comments:comments});
         });
     });
-    
 
     //删除新闻路由
     app.del('/news/manager:_id',isManager,loadNews,function(req,res,next){
@@ -121,13 +120,13 @@ module.exports = function(app){
                 return next(err);
             }
         });
-        Comments.remove({news:onenews._id},function(req,res,next){
+        Comments.remove({news:onenews._id},function(err,next){
             if(err) {
-                console.log('新闻删除失败');
+                console.log('评论删除失败');
                 return next(err);
             }
-        })
-        coNews.remove({news:onenews._id},function(req,res,next){
+        });
+        coNews.remove({news:onenews._id},function(err,next){
             if(err){
                 console.log('新闻删除失败');
                 return next(err);
