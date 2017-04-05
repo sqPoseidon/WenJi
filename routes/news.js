@@ -64,12 +64,19 @@ module.exports = function(app){
     });
     //用户收藏新闻
     app.post('/news/user/collect:_id',loggedIn,loadNews,loadUser,function(req,res,next){
-        coNews.create({user:req.user._id,news:req.onenews._id,title:req.onenews.title},function(err){
-            if(err){
-                console.log('收藏新闻失败');
+        coNews.where({user:req.user._id,news:req.onenews._id}).count(function(err,count){
+            if(err) return next(err);
+            if(count>0) {
+                res.redirect('/news/user' + req.onenews._id);
+            } else {
+                coNews.create({user:req.user._id,news:req.onenews._id,title:req.onenews.title},function(err){
+                    if(err){
+                        console.log('收藏新闻失败');
+                    }
+                });
+                res.redirect('/news/user' + req.onenews._id);
             }
         });
-        res.redirect('/news/user' + req.onenews._id);
     })
     //用户取消收藏新闻
     app.post('/news/user/cancel:_id',loggedIn,loadNews,loadUser,function(req,res,next){

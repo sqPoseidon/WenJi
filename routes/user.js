@@ -1,6 +1,7 @@
 var async = require('async');
 var path = require('path');
 var fs = require('fs');
+var multiparty = require('multiparty');
 var Users = require('../data/models/users');
 var Articles = require('../data/models/articles');
 var News = require('../data/models/news');
@@ -8,7 +9,6 @@ var loadUser = require('./middleware/load_user');
 var coNews = require('../data/models/coNews');
 var coArticles = require('../data/models/coArticles');
 var loggedIn = require('./middleware/logged_in');
-var savePortrait = require('./middleware/savePortrait');
 module.exports = function(app){
   //默认用户信息路由
   app.get('/user',loggedIn,loadUser,function(req,res,next){
@@ -52,8 +52,39 @@ module.exports = function(app){
   app.get('/user/portrait',loggedIn,loadUser,function(req,res,next){
     res.render('user/portrait');
   });
-  app.post('/user/portrait',loggedIn,loadUser,savePortrait,function(req,res,next){
-     res.redirect('/user');
+  app.post('/user/portrait',loggedIn,loadUser,function(req,res,next){
+    console.log('在上传图片路由中');
+    //生成mulmultiparty对象，并配置上传目标路径
+    var form = new multiparty.Form({uploadDir:'./public/images/portraits/'});
+    //上传完成后处理
+    form.parse(req,function(err,fields,files){
+      var filesTmp = JSON.stringify(files,null,2);
+      if(err){
+        console.log('parse error: ' + err);
+        return next(err);
+      } else {
+        console.log('parse files : ' + filesTmp);
+        var inputFile = files.inputFile[0];
+        var uploadedPath = inputFile.path;
+        var timestamp = Date.now();
+
+        var dstPath = './public/images/portraits' + timestamp + inputFile.originalFilename;
+        console.log("the uploadPath is :" + uploadedPath);
+        console.log("the dstpath is :" + dstPath);
+        //重命名为真实文件名
+        fs.rename(uploadedPath, dstPath, function(err) {
+            if(err){
+              console.log('rename error: ' + err);
+            } else {
+              console.log('rename ok');
+            }
+        });
+        Users.update({phone:req.user.phone},{$set:{portrait:dstPath}},function(err){
+          console.log('用户头像更新错误');
+        });
+      };
+    })
+    res.redirect('/user');
   });
   
   //用户编辑个人资料路由

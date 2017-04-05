@@ -54,12 +54,19 @@ module.exports = function(app){
     });
     //用户收藏文章
     app.post('/articles/user/collect:_id',loggedIn,loadArticles,loadUser,function(req,res,next){
-        coArticles.create({user:req.user._id,article:req.article._id,title:req.article.title},function(err){
-            if(err){
-                console.log('新增收藏文章失败');
+        coArticles.where({user:req.user._id,article:req.article._id}).count(function(err,count){
+            if(err) return next(err);
+            if(count>0) {
+                res.redirect('/articles/user' + req.article._id);
+            } else {
+                coArticles.create({user:req.user._id,article:req.article._id,title:req.article.title},function(err){
+                    if(err){
+                        console.log('新增收藏文章失败');
+                    }
+                });
+                res.redirect('/articles/user' + req.article._id);
             }
-        });
-        res.redirect('/articles/user' + req.article._id);
+        }); 
     });
     //用户取消收藏文章
     app.post('/articles/user/cancel:_id',loggedIn,loadArticles,loadUser,function(req,res,next){
