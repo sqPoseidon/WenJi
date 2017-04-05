@@ -15,14 +15,14 @@ body：正文
     },
     created_at:{
         type:Date,
-        'default':Date.now,
+        'default':Date.now(),
         set:function(val){
             return undefined;
         }
     },
     updated_at:{
         type:Date,
-        'default':Date.now
+        'default':Date.now()
     },
     title:{
         type:String,

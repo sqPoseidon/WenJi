@@ -30,7 +30,7 @@ time：时间
     },
     time:{
         type:Date,
-        'default':Date.now,
+        'default':Date.now()
     }
 });
 CommentsSchema

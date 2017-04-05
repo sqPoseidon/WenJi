@@ -41,14 +41,14 @@ updated_at: 更新时间
     },
     created_at:{
         type:Date,
-        'default':Date.now,
+        'default':Date.now(),
         set:function(val){
             return undefined;
         }
     },
     updated_at:{
         type:Date,
-        'dafault':Date.now
+        'dafault':Date.now()
     }
 },{
         message:'Validation failed',

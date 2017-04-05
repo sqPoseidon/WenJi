@@ -15,7 +15,7 @@ var coArticlesSchema = new mongoose.Schema({
     title:String,
     time:{
         type:Date,
-        'default':Date.now
+        'default':Date.now()
     }
 });
 coArticlesSchema

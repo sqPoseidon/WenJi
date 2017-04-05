@@ -16,7 +16,7 @@ rate：推荐指数
     },
     time:{
         type:Date,
-        'default':Date.now
+        'default':Date.now()
     },
     title:{
         type:String,

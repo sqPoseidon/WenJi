@@ -16,7 +16,7 @@ picture：是否有图片
     },
     time:{
         type:Date,
-        'default':Date.now,
+        'default':Date.now(),
         set:function(val){
             return undefined;
         }

@@ -33,8 +33,8 @@ module.exports = function(app){
     //提交游记编辑信息
     app.post('/travels/edit',loggedIn,loadUser,function(req,res,next){
         var newTravel = req.body;
-        if(!newTravel.title) newTravel.title = req.body.title;
-        if(!newTravel.text) newTravel.text = req.body.text;
+        if(!newTravel.title) newTravel.title = req.session.travel.title;
+        if(!newTravel.text) newTravel.text = req.session.travel.text;
         var time = Date.now();
         Travels.update({_id:req.session.travel._id},{
             $set:{title:newTravel.title,text:newTravel.text,updated_at:time}},
