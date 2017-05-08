@@ -54,6 +54,30 @@ module.exports = function(app){
   });
   app.post('/user/portrait',loggedIn,loadUser,function(req,res,next){
     console.log('在上传图片路由中');
+    var imagePath = req.files.file.path;
+    var timestamp = Date.now();
+    var originalFilename = req.files.file.name;
+    console.log(imagePath + '\n' + timestamp + '\n' + originalFilename);
+    var dstpath = './public/images/portraits/' + timestamp + originalFilename;
+    console.log(dstpath);
+    if(!imagePath){
+      console.log('FILE ERROR!');
+      res.redirect('/user');
+    }
+    fs.rename(imagePath,dstpath,function(err){
+      if(err){
+              console.log('rename error: ' + err);
+            } 
+      else {
+              console.log('rename ok');
+              Users.update({phone:req.user.phone},{$set:{portrait:dstpath}},function(err){
+                console.log(dstpath);
+                console.log('用户头像更新错误');
+                });
+            }
+    });
+    res.redirect('/user');
+    /*
     //生成mulmultiparty对象，并配置上传目标路径
     var form = new multiparty.Form({uploadDir:'./public/images/portraits/'});
     //上传完成后处理
@@ -84,7 +108,7 @@ module.exports = function(app){
         });
       };
     })
-    res.redirect('/user');
+    */
   });
   
   //用户编辑个人资料路由
