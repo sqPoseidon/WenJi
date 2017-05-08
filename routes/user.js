@@ -21,7 +21,7 @@ module.exports = function(app){
     //console.log(portraitpath);
     //var portrait = fs.createReadStream(portraitpath);
     */
-    res.render('user/index',{user:req.user});//,portrait:portraitpath});
+    res.render('user/index',{user:req.user,img:req.user.portrait});//,portrait:portraitpath});
   })
   //用户查看收藏的新闻路由
   app.get('/user/coNews',loggedIn,loadUser,function(req,res,next){
@@ -58,7 +58,9 @@ module.exports = function(app){
     var timestamp = Date.now();
     var originalFilename = req.files.file.name;
     console.log(imagePath + '\n' + timestamp + '\n' + originalFilename);
-    var dstpath = './public/images/portraits/' + timestamp + originalFilename;
+    var newName = timestamp + originalFilename;
+    var dstpath = './public/images/portraits/' + newName;
+    var dpath = './images/portraits/' + newName;
     console.log(dstpath);
     if(!imagePath){
       console.log('FILE ERROR!');
@@ -70,7 +72,7 @@ module.exports = function(app){
             } 
       else {
               console.log('rename ok');
-              Users.update({phone:req.user.phone},{$set:{portrait:dstpath}},function(err){
+              Users.update({phone:req.user.phone},{$set:{portrait:dpath}},function(err){
                 console.log(dstpath);
                 console.log('用户头像更新错误');
                 });
