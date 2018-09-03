@@ -6,12 +6,12 @@
     "start": "node app.js"
   },
   "dependencies": {
-    "express": "3.5.0",
+    "express": ">=3.5.0",
     "jade": "*",
     "mongoose":">=2.7.0",
-    "async":"0.1.22",
-    "moment":"2.17.1",
-    "request":"2.10.0",
+    "async":">=0.1.22",
+    "moment":">=2.17.1",
+    "request":">=2.10.0",
     "multiparty":"latest"
   }
 }
